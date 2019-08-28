@@ -1,0 +1,93 @@
+{% extends "empdetails.html" %}
+{% block title %}Search{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+<script>
+  function srchfunc()
+  {
+    var txt = document.getElementById("srchby");
+    if(!txt.value)
+    {
+      txt.style.borderColor="red";
+    }
+    else
+    {
+      txt.style.borderColor="black";
+      document.getElementById('searchfrm').action="/search/"+txt.value;
+      //document.getElementById('searchfrm').submit();
+      var entry = {
+      searchval: txt.value
+      };
+
+      fetch(`${window.origin}/search/${txt.val}`, {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(entry),
+        cache: "no-cache",
+        headers: new Headers({
+          "content-type": "application/json"
+        })
+      })
+        .then(function (response) {
+          if (response.status !== 200) {
+            console.log(`Looks like there was a problem. Status code: ${response.status}`);
+            return;
+          }
+          response.json().then(function (data) {
+            console.log(data);
+          });
+        })
+        .catch(function (error) {
+          console.log("Fetch error: " + error);
+        });
+
+    }
+  }
+</script>
+<p style="height: 50px"><h1>Check out the employees...</h1></p><br>
+<div class="row">
+  <form id="searchfrm" method="POST">
+  <div class="col-sm-8">
+    <p><input type="text" class="form-control" id="srchby" name="srchby" placeholder="Search by Name, Designation or Phone number">
+  </div>
+  <div class="col-sm-4">
+    <p><input type="image" src="{{ url_for('static', filename = 'search_icon.png') }}" value="Search" title="Click to search" width=30 onclick="srchfunc()"></p>
+  </div>
+  </form>
+</div>
+<br>
+<div class="table-responsive">          
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Designation</th>
+        <th>Address</th>
+        <th>Phone</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% if dbres %}
+    {% for emp in dbres %}
+       <tr>
+         <td>{{ emp[1] }}</td>
+         <td>{{emp[2] }}</td>
+         <td>{{emp[3]}}</td>
+         <td>{{emp[4]}}</td>
+         <td><form id="delrec" action = "/delete/{{emp[0]}}" method ="POST"><input type="image" title="Delete this record" name="submit" src="{{ url_for('static', filename = 'delete_icon.png') }}" border="0" alt="Submit" width=15 />
+         </form></td>
+      </tr>
+    {% endfor %}
+    {% else %}
+    <tr><td colspan="5" class="danger">No entries found</td></tr>
+    {% endif %}
+    </tbody>
+  </table>
+</div>
+<p>
+  <form action="/add" action="GET"><input type="submit" class="button" Value="Add an Employee"></form>
+</p>
+{% endblock %}

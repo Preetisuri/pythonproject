@@ -1,0 +1,33 @@
+.pos-right {
+    align-content: left;
+}
+.poscenter {
+    display: inline-block;
+    padding-top: 50px;
+    align-content: center;
+    width: 100%;
+    background-color: darkgray;
+}
+.container {
+    position:inline-block;
+}
+.addspace{
+    height:50px;
+    padding: 20px;
+}
+.button {
+    background-color: rgb(27, 107, 173);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.button:hover {
+    background-color: lightgrey;
+    color: rgb(27, 107, 173);
+}

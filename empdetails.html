@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename = 'validate.js') }}"></script>
+  <LINK REL=StyleSheet href="/static/style.css" TYPE="text/css">
+  <title>Employee Details - {% block title %}{% endblock %}</title>
+  {% endblock %}
+</head>
+<body>
+
+<div class="container">
+  <div class="content">
+    {% block content %}{% endblock %}
+  </div>
+  <div class="row">
+      <p>{% include 'footer.html' %}</p>
+  </div>
+</div>
+</body>
+</html>
